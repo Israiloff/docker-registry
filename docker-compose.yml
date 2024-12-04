@@ -1,5 +1,10 @@
 version: "3.8"
 
+networks:
+  default:
+    external:
+      name: bridge
+
 services:
   docker-registry-ui:
     image: joxit/docker-registry-ui:main
@@ -11,7 +16,7 @@ services:
       - REGISTRY_TITLE=Docker Registry UI
       - DELETE_IMAGES=true
       - SHOW_CONTENT_DIGEST=true
-      - NGINX_PROXY_PASS_URL=http://registry-server:5000
+      - NGINX_PROXY_PASS_URL=http://docker-registry-server:5000
       - SHOW_CATALOG_NB_TAGS=true
       - CATALOG_MIN_BRANCHES=1
       - CATALOG_MAX_BRANCHES=1
@@ -19,10 +24,16 @@ services:
       - REGISTRY_SECURED=false
       - CATALOG_ELEMENTS_LIMIT=1000
     container_name: docker-registry-ui
+    depends_on:
+      - docker-registry-server
+    networks:
+      - default
 
   docker-registry-server:
     image: registry:latest
     restart: always
+    expose:
+      - 5000
     environment:
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin: "[https://hub.docker.com]"
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods: "[HEAD,GET,OPTIONS,DELETE]"
@@ -33,3 +44,5 @@ services:
     volumes:
       - ./registry/data:/var/lib/registry
     container_name: docker-registry-server
+    networks:
+      - default
