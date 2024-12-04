@@ -11,7 +11,7 @@ services:
     environment:
       - SINGLE_REGISTRY=true
       - REGISTRY_TITLE=Docker Registry UI
-      - DELETE_IMAGES=true
+      - DELETE_IMAGES=false
       - SHOW_CONTENT_DIGEST=true
       - NGINX_PROXY_PASS_URL=http://docker-registry-server:5000
       - SHOW_CATALOG_NB_TAGS=true
@@ -37,7 +37,7 @@ services:
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials: "[true]"
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: "[Authorization,Accept,Cache-Control]"
       REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: "[Docker-Content-Digest]"
-      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+      REGISTRY_STORAGE_DELETE_ENABLED: "false"
     volumes:
       - ./registry/data:/var/lib/registry
     container_name: docker-registry-server
