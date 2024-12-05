@@ -54,8 +54,6 @@ git clone <repository-url>
 cd <repository-directory>
 ```
 
----
-
 ### 2. **Prepare Configuration Files**
 
 Ensure the following files and directories exist:
@@ -95,8 +93,6 @@ Ensure the following directory exists:
 mkdir -p registry/data
 ```
 
----
-
 ### 3. **Start the Services**
 
 Run the following command to start the registry and UI:
@@ -104,8 +100,6 @@ Run the following command to start the registry and UI:
 ```bash
 docker-compose up -d
 ```
-
----
 
 ### 4. **Access the Services**
 
@@ -135,13 +129,70 @@ On your Docker host, configure Docker to use the registry as a mirror:
    sudo systemctl restart docker
    ```
 
-### Pull Images
+---
 
-When you pull an image, it will first check the local cache. If unavailable, it fetches the image from Docker Hub and stores it for future use:
+## **Using the Proxy Cache to Pull Images**
+
+When using this proxy cache setup, Docker Hub images must be prefixed with `library/` for official images. Additionally, to pull images explicitly from your private registry proxy cache, you must specify the registry host and port in the image reference.
+
+### **Pulling Images via the Proxy Cache**
+
+To pull images from Docker Hub and cache them through the registry proxy, use the following format:
 
 ```bash
-docker pull nginx
+docker pull <registry_host>:<registry_port>/library/<image_name>:<tag>
 ```
+
+#### **Examples:**
+
+1. **Pulling the Latest Alpine Image**:
+
+   ```bash
+   docker pull <registry_host>:<registry_port>/library/alpine:latest
+   ```
+
+2. **Pulling a Specific Tag of Nginx**:
+
+   ```bash
+   docker pull <registry_host>:<registry_port>/library/nginx:1.25
+   ```
+
+3. **Pulling and Using Ubuntu**:
+   ```bash
+   docker pull <registry_host>:<registry_port>/library/ubuntu:22.04
+   docker run -it <registry_host>:<registry_port>/library/ubuntu:22.04
+   ```
+
+Replace `<registry_host>` with the IP or hostname of your registry, and `<registry_port>` with the port exposed for the registry (default: `5000`).
+
+### **Why Use `library/` Prefix?**
+
+Official images on Docker Hub reside under the `library` namespace. Without the prefix, your proxy cache will not correctly locate the images.
+
+#### **Incorrect Example**:
+
+```bash
+docker pull <registry_host>:<registry_port>/alpine:latest
+```
+
+This will fail because `alpine:latest` is in the `library/` namespace.
+
+### **Direct Pulling Without Proxy Cache**
+
+If you need to bypass the proxy and pull directly from Docker Hub, simply omit the registry host and port:
+
+```bash
+docker pull alpine:latest
+```
+
+However, using the proxy cache allows caching and faster retrieval of images in the future.
+
+### **Checking Cached Images**
+
+After pulling images via the proxy, they are stored in the local registry cache. You can view these images through the **Docker Registry UI**:
+
+1. Open the UI at `http://<your_registry_host>:1091`.
+2. Browse the list of cached images under the **Catalog** section.
 
 ---
 
