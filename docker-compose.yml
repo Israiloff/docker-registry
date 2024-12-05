@@ -27,7 +27,7 @@ services:
     ports:
       - 1091:80
     environment:
-      - RA_REGISTRY_HOST=host.docker.internal
+      - RA_REGISTRY_HOST=http://host.docker.internal
       - RA_REGISTRY_PORT=5000
     volumes:
       - ./certs:/app/certs
