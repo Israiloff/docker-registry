@@ -20,4 +20,20 @@ health:
     enabled: true
     interval: 10s
     threshold: 3
-
+notifications:
+  events:
+    includereferences: true
+  endpoints:
+    - name: ra-listener
+      disabled: false
+      url: http://host.docker.internal/api/v1/registry/events
+      headers:
+      Authorization: [ Basic Y2xpZW50MDg6Y0t1cnNrQWdybzA4 ]
+      timeout: 1s
+      threshold: 5
+      backoff: 3s
+      ignoredmediatypes:
+        - application/octet-stream
+      ignore:
+        mediatypes:
+          - application/octet-stream
