@@ -32,3 +32,6 @@ services:
       - ./certs:/app/certs
       - ./config:/app/config
       - ./data:/app/data
+    container_name: registry-admin
+    networks:
+      - inner
