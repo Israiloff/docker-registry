@@ -27,7 +27,8 @@ services:
     ports:
       - 1091:80
     environment:
-      - RA_CONFIG_FILE=/app/config/token-ra-config.yml
+      - RA_REGISTRY_HOST=http://localhost
+      - RA_REGISTRY_PORT=5000
     volumes:
       - ./certs:/app/certs
       - ./config:/app/config
