@@ -2,6 +2,8 @@
 
 This project sets up a Docker Registry with **proxy cache** functionality and a **web-based UI** to manage and monitor the registry.
 
+---
+
 ## **Features**
 
 - Acts as a **proxy cache** for Docker Hub or any other upstream registry.
