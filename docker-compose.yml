@@ -37,8 +37,9 @@ services:
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: "[Authorization,Accept,Cache-Control]"
       REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: "[Docker-Content-Digest]"
       REGISTRY_STORAGE_DELETE_ENABLED: "false"
+      REGISTRY_LOG_LEVEL: "debug"
     volumes:
-      - ./data:/var/lib/registry:rw
+      - ./data/registry:/var/lib/registry:rw
       - ./config/server/config.yml:/etc/docker/registry/config.yml:ro
     container_name: registry-server
     networks:
