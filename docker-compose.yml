@@ -32,7 +32,6 @@ services:
     ports:
       - 5000:5000
     environment:
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin: "[https://hub.docker.com]"
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods: "[HEAD,GET,OPTIONS]"
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials: "[true]"
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: "[Authorization,Accept,Cache-Control]"
