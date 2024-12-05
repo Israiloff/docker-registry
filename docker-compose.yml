@@ -40,7 +40,7 @@ services:
       REGISTRY_STORAGE_DELETE_ENABLED: "false"
     volumes:
       - ./data:/var/lib/registry:rw
-      - ./config/server:/etc/docker/registry
+      - ./config/server/config.yml:/etc/docker/registry/config.yml:ro
     container_name: registry-server
     networks:
       - inner
