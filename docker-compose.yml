@@ -4,7 +4,7 @@ networks:
 
 services:
   registry-server:
-    image: registry:latest
+    image: registry:2
     restart: unless-stopped
     ports:
       - 5000:5000
